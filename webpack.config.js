@@ -1,74 +1,50 @@
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
 const defaultConfig = require("@wordpress/scripts/config/webpack.config");
-const CopyPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // 拷贝静态文件
-// 递归获取目录下所有.js文件作为入口
-function getEntries(dir) {
-    let entries = {};
+const CopyPlugin = require("copy-webpack-plugin");
 
-    function readDir(dir) {
-        const files = fs.readdirSync(dir);
+function getEntries(directory) {
+    const entries = {};
+
+    function getFiles(dir) {
+        const files = fs.readdirSync(dir, { withFileTypes: true });
 
         files.forEach(file => {
-            const filePath = path.resolve(dir, file);
-            const stat = fs.statSync(filePath);
+            const filePath = path.join(dir, file.name);
+            const isDirectory = file.isDirectory();
 
-            if (stat.isDirectory()) {
-                readDir(filePath);
-            } else if (stat.isFile() && path.extname(filePath) === '.js') {
-                const relativePath = path.relative('./src', filePath);
-                const entryName = path.dirname(relativePath);
-                entries[entryName] = filePath;
+            if (isDirectory) {
+                getFiles(filePath);
+            } else {
+                if (file.name === 'index.js') {
+                    const entryName = path.relative(directory, dir);
+                    entries[entryName] = filePath;
+                }
             }
         });
     }
 
-    readDir(dir);
+    getFiles(directory);
 
     return entries;
 }
 module.exports = {
     ...defaultConfig,
-    entry: getEntries('./src'),
-    output: {
-        path: path.resolve(process.cwd(), 'dist'),
-        filename: '[name]/index.js',
+    entry: {
+        // 从src目录下的每个块的index.js文件创建一个入口点
+        ...getEntries(path.resolve(__dirname, 'src')),
     },
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env', '@wordpress/babel-preset-default']
-                    }
-                }
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'sass-loader'
-                ]
-            },
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
-            },
-        ]
+    output: {
+        filename: '[name]/index.js',
+        path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
-        new MiniCssExtractPlugin({
-            filename: '[name].css'
-        }),
+        ...defaultConfig.plugins,
+        // 将每个块的block.json文件复制到dist目录下
         new CopyPlugin({
             patterns: [
-                { from: 'src/**/block.json', to: 'dist/[path][name][ext]', context: 'src/' },
+                { from: '**/block.json', to: '[path][name][ext]', context: path.resolve(__dirname, 'src') },
             ],
         }),
-    ]
+    ],
 };
