@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+  },
   "dependencies": {
     "@wordpress/block-editor": "^12.2.0",
     "@wordpress/blocks": "^12.11.0",
