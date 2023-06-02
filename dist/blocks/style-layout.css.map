@@ -1,1 +1,0 @@
-{"version":3,"file":"blocks/style-layout.css","mappings":";;;AAAA;EACI;AACJ,C","sources":["webpack:///./src/blocks/layout/style.scss"],"sourcesContent":[".justify-content {\r\n    text-align: center;\r\n}"],"names":[],"sourceRoot":""}

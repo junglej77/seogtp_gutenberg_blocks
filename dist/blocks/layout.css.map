@@ -1,1 +1,0 @@
-{"version":3,"file":"blocks\\layout.css","mappings":";;;AAAA;EACI;AACJ;AACI;EACI;AACR,C","sources":["webpack:///./src/blocks/layout/editor.scss"],"sourcesContent":[".justify-content {\r\n    text-align: right;\r\n\r\n    p {\r\n        font-size: 15px;\r\n    }\r\n}"],"names":[],"sourceRoot":""}
