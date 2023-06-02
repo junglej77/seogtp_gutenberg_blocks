@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "@wordpress/block-editor": "^12.2.0",
+    "@wordpress/block-library": "^8.11.0",
+    "@wordpress/blocks": "^12.11.0",
+    "@wordpress/components": "^25.0.0",
+    "@wordpress/i18n": "^4.34.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.1",
+    "@babel/preset-env": "^7.22.4",
+    "@babel/preset-react": "^7.22.3",
+    "@wordpress/scripts": "^26.5.0",
+    "webpack": "^5.85.0",
+    "webpack-cli": "^5.1.1"
+  }
+}
