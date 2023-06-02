@@ -16,4 +16,14 @@ class Seogtp_gutenberg_blocks_Admin
 	{
 		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/seogtp_gutenberg_blocks-admin.js', array('jquery'), $this->version, false);
 	}
+	public function load_js_edit_page()
+	{
+		global $pagenow;
+
+		// 检查是否在文章编辑页
+		if ($pagenow === 'post.php' || $pagenow === 'post-new.php') {
+			// 加载特定的 JavaScript 文件
+			wp_enqueue_script('custom_block_script', plugin_dir_url(__FILE__) . 'js/block.js', array('jquery'), $this->version, true);
+		}
+	}
 }
