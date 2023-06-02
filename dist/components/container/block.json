@@ -1,0 +1,36 @@
+{
+  "apiVersion": 2,
+  "name": "wellerpcb/container",
+  "version": "0.1.0",
+  "title": "wellerpcb局部",
+  "category": "wellerpcb",
+  "icon": "smiley",
+  "description": "网站页面分成多个小的局部，这个局部限宽1200像素，全宽同浏览器一样的宽度。",
+  "textdomain": "container",
+  "supports": {
+    "html": false
+  },
+  "example": {},
+  "attributes": {
+    "wide": {
+      "type": "boolean",
+      "default": false
+    },
+    "padding": {
+      "type": "object",
+      "default": {
+        "top": 0,
+        "right": 15,
+        "bottom": 0,
+        "left": 15
+      }
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": " "
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}
