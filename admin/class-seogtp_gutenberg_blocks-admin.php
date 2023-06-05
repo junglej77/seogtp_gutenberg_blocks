@@ -22,7 +22,7 @@ class Seogtp_gutenberg_blocks_Admin
 		// 检查是否在文章编辑页
 		if ($pagenow === 'post.php' || $pagenow === 'post-new.php') {
 			// 加载特定的 JavaScript 文件
-			wp_enqueue_script('custom_block_script', plugin_dir_url(__FILE__) . 'js/block.js',   array('wp-element', 'wp-plugins', 'wp-edit-post'), $this->version, true);
+			wp_enqueue_script('custom_block_script', plugin_dir_url(__FILE__) . 'js/block.js',   array('wp-blocks', 'wp-edit-post'), $this->version, true);
 		}
 	}
 	// Register a new block category

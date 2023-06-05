@@ -13,14 +13,13 @@ function getEntries(directory) {
         files.forEach(file => {
             const filePath = path.join(dir, file.name);
             const isDirectory = file.isDirectory();
+            const isBlockDirectory = dir.includes(path.normalize('src/blocks'));
 
             if (isDirectory) {
                 getFiles(filePath);
-            } else {
-                if (file.name === 'index.js') {
-                    const entryName = path.relative(directory, dir);
-                    entries[entryName] = filePath;
-                }
+            } else if (file.name.endsWith('.js') && (!isBlockDirectory || file.name === 'index.js')) {
+                const entryName = path.relative(directory, filePath).replace(/\.js$/, '');
+                entries[entryName] = filePath;
             }
         });
     }
@@ -36,7 +35,7 @@ module.exports = {
         ...getEntries(path.resolve(__dirname, 'src')),
     },
     output: {
-        filename: '[name]/index.js',
+        filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
     },
     module: {

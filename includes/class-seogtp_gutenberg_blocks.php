@@ -53,7 +53,7 @@ class Seogtp_gutenberg_blocks
 
 
 		// 文章编辑页时加载js
-		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'load_js_edit_page');
+		$this->loader->add_action('enqueue_block_editor_assets', $plugin_admin, 'load_js_edit_page');
 		// 注册一个新的块目录
 		$this->loader->add_filter('block_categories', $plugin_admin, 'myplugin_block_category', 10, 2);
 	}

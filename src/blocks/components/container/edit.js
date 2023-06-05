@@ -12,7 +12,7 @@ import {
     ColorPalette, Button
 } from '@wordpress/components';
 import classnames from 'classnames';
-import { isObjectValueEqualNew } from '../../utils/utils.js';
+import { isObjectValueEqualNew } from '../../../utils/utils.js';
 
 import './editor.scss';
 export default function Edit({ attributes, setAttributes }) {
