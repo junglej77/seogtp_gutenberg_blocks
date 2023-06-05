@@ -42,7 +42,6 @@ class Seogtp_gutenberg_blocks
 
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_shared, 'enqueue_shared_styles');
 		$this->loader->add_action('wp_enqueue_scripts', $plugin_shared, 'enqueue_shared_styles');
-		// $this->loader->add_action('wp_enqueue_scripts', $plugin_shared, 'enqueue_shared_styles');
 	}
 	private function define_admin_hooks()
 	{
@@ -52,8 +51,11 @@ class Seogtp_gutenberg_blocks
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
 
+
 		// 文章编辑页时加载js
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'load_js_edit_page');
+		// 注册一个新的块目录
+		$this->loader->add_filter('block_categories', $plugin_admin, 'myplugin_block_category', 10, 2);
 	}
 	private function define_public_hooks()
 	{
