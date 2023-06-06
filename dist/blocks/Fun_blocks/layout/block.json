@@ -1,0 +1,27 @@
+{
+  "apiVersion": 2,
+  "name": "wellerpcb/layout",
+  "version": "0.1.0",
+  "title": "wellerpcb布局",
+  "category": "wellerpcb",
+  "icon": "",
+  "description": "控制里面元素的位置",
+  "textdomain": "layout",
+  "supports": {
+    "html": false
+  },
+  "example": {},
+  "attributes": {
+    "alignItems": {
+      "type": "string",
+      "default": "center"
+    },
+    "justifyContent": {
+      "type": "string",
+      "default": "space-between"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

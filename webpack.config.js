@@ -3,7 +3,8 @@ const fs = require('fs');
 const glob = require('glob');
 const defaultConfig = require("@wordpress/scripts/config/webpack.config");
 const CopyPlugin = require("copy-webpack-plugin");
-
+// 定义特定的目录
+const specificDirectories = ['src/admin', 'src/public', 'src/common'];
 function getEntries(directory) {
     const entries = {};
 
@@ -14,10 +15,12 @@ function getEntries(directory) {
             const filePath = path.join(dir, file.name);
             const isDirectory = file.isDirectory();
             const isBlockDirectory = dir.includes(path.normalize('src/blocks'));
-
+            // 检查是否在特定的目录中
+            const isInSpecificDirectory = specificDirectories.some(specificDirectory =>
+                dir.includes(path.normalize(specificDirectory)));
             if (isDirectory) {
                 getFiles(filePath);
-            } else if (file.name.endsWith('.js') && (!isBlockDirectory || file.name === 'index.js')) {
+            } else if (file.name.endsWith('.js') && (!isBlockDirectory || file.name === 'index.js') && !isInSpecificDirectory) {
                 const entryName = path.relative(directory, filePath).replace(/\.js$/, '');
                 entries[entryName] = filePath;
             }
@@ -28,14 +31,33 @@ function getEntries(directory) {
 
     return entries;
 }
+function getSpecificEntries() {
+    let entries = {};
+    specificDirectories.forEach(directory => {
+        glob.sync(`./${directory}/**/*.js`).forEach(filePath => {
+            let entryName = filePath.replace('./src/', '').replace('.js', '');
+            entries[entryName] = filePath;
+        });
+    });
+    return entries;
+}
+
 module.exports = {
     ...defaultConfig,
     entry: {
         // 从src目录下的每个块的index.js文件创建一个入口点
         ...getEntries(path.resolve(__dirname, 'src')),
+        ...getSpecificEntries(),
     },
     output: {
-        filename: '[name].js',
+        filename: (pathData) => {
+            const isInSpecificDirectory = specificDirectories.some(directory =>
+                pathData.chunk.name.startsWith(directory.replace('src/', '')));
+            if (isInSpecificDirectory) {
+                return '../[name].js';
+            }
+            return '[name].js';
+        },
         path: path.resolve(__dirname, 'dist'),
     },
     module: {
