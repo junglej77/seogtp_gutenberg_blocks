@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 document.addEventListener('DOMContentLoaded', function () {
     wp.data.subscribe(function () {
         const toolbarLeftContainer = document.querySelector('.edit-post-header-toolbar');
@@ -21,50 +20,52 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+import { InspectorControls } from '@wordpress/block-editor';
+import { Button, PanelBody, } from '@wordpress/components';
+import { useState } from '@wordpress/element';
 
-import { registerBlockType } from '@wordpress/blocks';
-import { InspectorControls, BlockControls } from '@wordpress/block-editor';
-import { Button, PanelBody, Toolbar } from '@wordpress/components';
-import { Fragment } from '@wordpress/element';
-
-registerBlockType('my-plugin/my-block', {
-    // ...其他设置...
-    apiVersion: 2,
-    title: 'My Block',
-    icon: 'smiley',
-    category: 'design',
-    example: {},
-    edit: (props) => {
-        const { isSelected } = props;
-        function alert() {
-            alert(1)
-        };
-        return (
-            <Fragment>
-                <BlockControls>
-                    <Toolbar>
-                        <Button
-                            icon="admin-settings"
-                            label="Additional Settings"
-                            onClick={() => {
-                                alert();
-                            }}
-                        />
-                    </Toolbar>
-                </BlockControls>
-                {isSelected && (
-                    <InspectorControls>
-                        <PanelBody title="Additional Settings">
-                            <p>这里是一些附加设置。</p>
-                            {/* 插入你的设置控件 */}
-                        </PanelBody>
-                    </InspectorControls>
+const MyComponent = () => {
+    // 在这里编写组件的逻辑和状态
+    let tabs = [
+        {
+            variant: 'secondary',
+            key: 'block',
+            name: '属性'
+        },
+        {
+            variant: 'secondary',
+            key: 'style',
+            name: '样式'
+        },
+        {
+            variant: 'secondary',
+            key: 'advanced',
+            name: '高级'
+        }
+    ]
+    const [tabActive, setTabActive] = useState('style')
+    const tabclick = (key) => {
+        console.log(key);
+        setTabActive(key)
+    }
+    return (
+        // 返回组件的 JSX 结构
+        <InspectorControls>
+            <PanelBody>
+                {tabs.map(item =>
+                    <Button
+                        className={[`seogtpGB_tab seogtpGB_${item.key}`, item.key == tabActive && 'active']}
+                        variant={item.variant}
+                        onClick={() => {
+                            tabclick(item.key)
+                        }}
+                    >
+                        {item.name}
+                    </Button>
                 )}
-                <div>这是我的 block 的内容。</div>
-            </Fragment>
-        );
-    },
-    save: () => {
-        return null;  // 使用 dynamic block，前台通过 PHP 渲染
-    },
-});
+            </PanelBody>
+        </InspectorControls>
+    );
+};
+
+export default MyComponent;
