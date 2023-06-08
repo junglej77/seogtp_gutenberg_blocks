@@ -40,6 +40,16 @@ module.exports = window["wp"]["components"];
 
 module.exports = window["wp"]["element"];
 
+/***/ }),
+
+/***/ "@wordpress/i18n":
+/*!******************************!*\
+  !*** external ["wp","i18n"] ***!
+  \******************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["i18n"];
+
 /***/ })
 
 /******/ 	});
@@ -122,13 +132,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
-
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__);
 document.addEventListener('DOMContentLoaded', function () {
   wp.data.subscribe(function () {
     const toolbarLeftContainer = document.querySelector('.edit-post-header-toolbar');
@@ -150,7 +161,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-const MyComponent = () => {
+
+
+const SeoGtpBlocksSetup = ({
+  children
+}) => {
+  // 定义状态变量
+  const [tabActive, setTabActive] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)('style');
   // 在这里编写组件的逻辑和状态
   let tabs = [{
     variant: 'secondary',
@@ -165,24 +182,41 @@ const MyComponent = () => {
     key: 'advanced',
     name: '高级'
   }];
-  const [tabActive, setTabActive] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)('style');
   const tabclick = key => {
-    console.log(key);
+    document.querySelector('.components-panel').setAttribute('data-seogtpGB-tab', key);
     setTabActive(key);
   };
-  return (
-    /*#__PURE__*/
-    // 返回组件的 JSX 结构
-    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, null, tabs.map(item => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-      className: [`seogtpGB_tab seogtpGB_${item.key}`, item.key == tabActive && 'active'],
-      variant: item.variant,
-      onClick: () => {
-        tabclick(item.key);
-      }
-    }, item.name))))
-  );
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, null, tabs.map(item => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    className: [`seogtpGB_tab seogtpGB_${item.key}`, item.key == tabActive && 'active'],
+    variant: item.variant,
+    onClick: () => {
+      tabclick(item.key);
+    }
+  }, item.name))), tabActive == 'block' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalBorderControl, {
+    colors: [{
+      color: '#72aee6',
+      name: 'Blue 20'
+    }, {
+      color: '#3582c4',
+      name: 'Blue 40'
+    }, {
+      color: '#e65054',
+      name: 'Red 40'
+    }, {
+      color: '#8a2424',
+      name: 'Red 70'
+    }, {
+      color: '#f2d675',
+      name: 'Yellow 10'
+    }, {
+      color: '#bd8600',
+      name: 'Yellow 40'
+    }],
+    label: "Border",
+    onChange: function noRefCheck() {}
+  }), tabActive == 'style' && children, tabActive == 'advanced' && '高级设置');
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MyComponent);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SeoGtpBlocksSetup);
 })();
 
 /******/ })()

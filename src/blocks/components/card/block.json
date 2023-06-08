@@ -11,51 +11,6 @@
     "html": false
   },
   "example": {},
-  "attributes": {
-    "borderRadius": {
-      "type": "number",
-      "default": 5
-    },
-    "borderShow": {
-      "type": "boolean",
-      "default": false
-    },
-    "border": {
-      "type": "Object",
-      "default": {
-        "width": 1,
-        "style": "solid",
-        "color": "#000"
-      }
-    },
-    "boxShadowShow": {
-      "type": "boolean",
-      "default": true
-    },
-    "boxShadow": {
-      "type": "Object",
-      "default": {
-        "x": 0,
-        "y": 0,
-        "blur": 10,
-        "spread": 0,
-        "color": "rgb(0 0 0 / 38%)"
-      }
-    },
-    "backgroundColor": {
-      "type": "string",
-      "default": " "
-    },
-    "padding": {
-      "type": "Object",
-      "default": {
-        "top": 20,
-        "left": 20,
-        "right": 20,
-        "bottom": 20
-      }
-    }
-  },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css"

@@ -1,4 +1,3 @@
-import React from 'react';
 document.addEventListener('DOMContentLoaded', function () {
     wp.data.subscribe(function () {
         const toolbarLeftContainer = document.querySelector('.edit-post-header-toolbar');
@@ -20,11 +19,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+import React from 'react';
+import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
-import { Button, PanelBody, } from '@wordpress/components';
+import { Button, PanelBody, __experimentalBorderControl as BorderControl } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 
-const MyComponent = () => {
+
+
+const SeoGtpBlocksSetup = ({ children }) => {
+    // 定义状态变量
+    const [tabActive, setTabActive] = useState('style')
     // 在这里编写组件的逻辑和状态
     let tabs = [
         {
@@ -43,14 +48,12 @@ const MyComponent = () => {
             name: '高级'
         }
     ]
-    const [tabActive, setTabActive] = useState('style')
     const tabclick = (key) => {
-        console.log(key);
+        document.querySelector('.components-panel').setAttribute('data-seogtpGB-tab', key)
         setTabActive(key)
     }
     return (
-        // 返回组件的 JSX 结构
-        <InspectorControls>
+        <InspectorControls >
             <PanelBody>
                 {tabs.map(item =>
                     <Button
@@ -64,8 +67,45 @@ const MyComponent = () => {
                     </Button>
                 )}
             </PanelBody>
+            {
+                tabActive == 'block' && <BorderControl
+                    colors={[
+                        {
+                            color: '#72aee6',
+                            name: 'Blue 20'
+                        },
+                        {
+                            color: '#3582c4',
+                            name: 'Blue 40'
+                        },
+                        {
+                            color: '#e65054',
+                            name: 'Red 40'
+                        },
+                        {
+                            color: '#8a2424',
+                            name: 'Red 70'
+                        },
+                        {
+                            color: '#f2d675',
+                            name: 'Yellow 10'
+                        },
+                        {
+                            color: '#bd8600',
+                            name: 'Yellow 40'
+                        }
+                    ]}
+                    label="Border"
+                    onChange={function noRefCheck() { }}
+                />
+            }
+            {
+                tabActive == 'style' && children
+            }
+            {
+                tabActive == 'advanced' && '高级设置'
+            }
         </InspectorControls>
-    );
+    )
 };
-
-export default MyComponent;
+export default SeoGtpBlocksSetup;

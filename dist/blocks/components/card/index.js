@@ -1,4 +1,5 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./src/admin/js/block.js":
@@ -7,20 +8,20 @@
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
-
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__);
 document.addEventListener('DOMContentLoaded', function () {
   wp.data.subscribe(function () {
     const toolbarLeftContainer = document.querySelector('.edit-post-header-toolbar');
@@ -42,7 +43,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-const MyComponent = () => {
+
+
+const SeoGtpBlocksSetup = ({
+  children
+}) => {
+  // 定义状态变量
+  const [tabActive, setTabActive] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)('style');
   // 在这里编写组件的逻辑和状态
   let tabs = [{
     variant: 'secondary',
@@ -57,24 +64,41 @@ const MyComponent = () => {
     key: 'advanced',
     name: '高级'
   }];
-  const [tabActive, setTabActive] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)('style');
   const tabclick = key => {
-    console.log(key);
+    document.querySelector('.components-panel').setAttribute('data-seogtpGB-tab', key);
     setTabActive(key);
   };
-  return (
-    /*#__PURE__*/
-    // 返回组件的 JSX 结构
-    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, null, tabs.map(item => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-      className: [`seogtpGB_tab seogtpGB_${item.key}`, item.key == tabActive && 'active'],
-      variant: item.variant,
-      onClick: () => {
-        tabclick(item.key);
-      }
-    }, item.name))))
-  );
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, null, tabs.map(item => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    className: [`seogtpGB_tab seogtpGB_${item.key}`, item.key == tabActive && 'active'],
+    variant: item.variant,
+    onClick: () => {
+      tabclick(item.key);
+    }
+  }, item.name))), tabActive == 'block' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalBorderControl, {
+    colors: [{
+      color: '#72aee6',
+      name: 'Blue 20'
+    }, {
+      color: '#3582c4',
+      name: 'Blue 40'
+    }, {
+      color: '#e65054',
+      name: 'Red 40'
+    }, {
+      color: '#8a2424',
+      name: 'Red 70'
+    }, {
+      color: '#f2d675',
+      name: 'Yellow 10'
+    }, {
+      color: '#bd8600',
+      name: 'Yellow 40'
+    }],
+    label: "Border",
+    onChange: function noRefCheck() {}
+  }), tabActive == 'style' && children, tabActive == 'advanced' && '高级设置');
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MyComponent);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SeoGtpBlocksSetup);
 
 /***/ }),
 
@@ -84,38 +108,23 @@ const MyComponent = () => {
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Edit)
 /* harmony export */ });
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _admin_js_block__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../admin/js/block */ "./src/admin/js/block.js");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./src/blocks/components/card/editor.scss");
+/* harmony import */ var _admin_js_block__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../admin/js/block */ "./src/admin/js/block.js");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./editor.scss */ "./src/blocks/components/card/editor.scss");
 
 
 
 
-
-
-
-function Edit({
-  attributes,
-  setAttributes
-}) {
-  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)({
-    className: classnames__WEBPACK_IMPORTED_MODULE_4___default()({})
-  });
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_admin_js_block__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks, {
+function Edit() {
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)();
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_admin_js_block__WEBPACK_IMPORTED_MODULE_0__["default"], null), /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InnerBlocks, {
     placeholder: "\u8BF7\u5C06\u4F60\u7684\u5185\u5BB9\u653E\u5728\u8FD9\u91CC\u9762"
   })));
 }
@@ -128,7 +137,6 @@ function Edit({
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ save)
@@ -137,144 +145,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
 
 
-
-function save({
-  attributes
-}) {
-  const {
-    borderRadius,
-    borderShow,
-    border,
-    boxShadowShow,
-    boxShadow,
-    backgroundColor,
-    padding
-  } = attributes;
-
-  // 边角的弧度
-  let borderRadiusObj = {};
-  if (borderRadiusObj != 5) {
-    borderRadiusObj.borderRadius = borderRadius;
-  }
-  // 根据borderShow是否展示设置样式,如果跟默认一样也不展示
-  let borderObj = {};
-  if (borderShow) {
-    Object.keys(border).forEach(key => {
-      switch (key) {
-        case 'width':
-          if (border.width != 1) borderObj.borderWidth = border.width;
-        case 'style':
-          if (border.style != 'solid') borderObj.borderStyle = border.style;
-        case 'color':
-          if (border.color != 'rgb(0 0 0 / 38%') borderObj.borderColor = border.color;
-        default:
-          ;
-      }
-    });
-  }
-  // 根据borderShow是否展示设置样式,如果跟默认一样也不展示
-  let boxShadowObj = {};
-  if (boxShadowShow) {
-    boxShadowObj.boxShadow = `${boxShadow.x}px ${boxShadow.y}px ${boxShadow.blur}px ${boxShadow.spread}px ${boxShadow.color}`;
-  }
-  // 卡片的背景颜色
-  let backgroundColorObj = {};
-  if (backgroundColor != " ") {
-    backgroundColorObj.backgroundColor = backgroundColor;
-  }
-  // 卡片的内边距
-  let paddingObj = {};
-  if (padding != "20px") {
-    paddingObj.padding = `${padding.top} ${padding.right} ${padding.bottom} ${padding.left}`;
-  }
-  const classes = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
-    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()({
-      [`border-hide`]: !borderShow,
-      [`boxShadow-hide`]: !boxShadowShow
-    }),
-    style: {
-      ...borderRadiusObj,
-      ...borderObj,
-      ...boxShadowObj,
-      ...backgroundColorObj,
-      ...paddingObj
-    }
-  });
-  return /*#__PURE__*/React.createElement("div", classes, /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null));
+function save() {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null));
 }
-
-/***/ }),
-
-/***/ "./node_modules/classnames/index.js":
-/*!******************************************!*\
-  !*** ./node_modules/classnames/index.js ***!
-  \******************************************/
-/***/ ((module, exports) => {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	Copyright (c) 2018 Jed Watson.
-	Licensed under the MIT License (MIT), see
-	http://jedwatson.github.io/classnames
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var hasOwn = {}.hasOwnProperty;
-	var nativeCodeString = '[native code]';
-
-	function classNames() {
-		var classes = [];
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (!arg) continue;
-
-			var argType = typeof arg;
-
-			if (argType === 'string' || argType === 'number') {
-				classes.push(arg);
-			} else if (Array.isArray(arg)) {
-				if (arg.length) {
-					var inner = classNames.apply(null, arg);
-					if (inner) {
-						classes.push(inner);
-					}
-				}
-			} else if (argType === 'object') {
-				if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes('[native code]')) {
-					classes.push(arg.toString());
-					continue;
-				}
-
-				for (var key in arg) {
-					if (hasOwn.call(arg, key) && arg[key]) {
-						classes.push(key);
-					}
-				}
-			}
-		}
-
-		return classes.join(' ');
-	}
-
-	if ( true && module.exports) {
-		classNames.default = classNames;
-		module.exports = classNames;
-	} else if (true) {
-		// register as 'classnames', consistent with npm package name
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
-			return classNames;
-		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	} else {}
-}());
-
 
 /***/ }),
 
@@ -284,7 +159,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -299,7 +173,6 @@ __webpack_require__.r(__webpack_exports__);
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -314,7 +187,6 @@ __webpack_require__.r(__webpack_exports__);
   \************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = window["React"];
 
 /***/ }),
@@ -325,7 +197,6 @@ module.exports = window["React"];
   \*************************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = window["wp"]["blockEditor"];
 
 /***/ }),
@@ -336,7 +207,6 @@ module.exports = window["wp"]["blockEditor"];
   \********************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = window["wp"]["blocks"];
 
 /***/ }),
@@ -347,7 +217,6 @@ module.exports = window["wp"]["blocks"];
   \************************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = window["wp"]["components"];
 
 /***/ }),
@@ -358,7 +227,6 @@ module.exports = window["wp"]["components"];
   \*********************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = window["wp"]["element"];
 
 /***/ }),
@@ -369,7 +237,6 @@ module.exports = window["wp"]["element"];
   \******************************/
 /***/ ((module) => {
 
-"use strict";
 module.exports = window["wp"]["i18n"];
 
 /***/ }),
@@ -380,8 +247,7 @@ module.exports = window["wp"]["i18n"];
   \***********************************************/
 /***/ ((module) => {
 
-"use strict";
-module.exports = JSON.parse('{"apiVersion":2,"name":"wellerpcb/card","version":"0.1.0","title":"wellerpcb卡片","category":"wellerpcb","icon":"","description":"基础卡片展示","textdomain":"br","supports":{"html":false},"example":{},"attributes":{"borderRadius":{"type":"number","default":5},"borderShow":{"type":"boolean","default":false},"border":{"type":"Object","default":{"width":1,"style":"solid","color":"#000"}},"boxShadowShow":{"type":"boolean","default":true},"boxShadow":{"type":"Object","default":{"x":0,"y":0,"blur":10,"spread":0,"color":"rgb(0 0 0 / 38%)"}},"backgroundColor":{"type":"string","default":" "},"padding":{"type":"Object","default":{"top":20,"left":20,"right":20,"bottom":20}}},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = JSON.parse('{"apiVersion":2,"name":"wellerpcb/card","version":"0.1.0","title":"wellerpcb卡片","category":"wellerpcb","icon":"","description":"基础卡片展示","textdomain":"br","supports":{"html":false},"example":{},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ })
 
@@ -489,9 +355,8 @@ module.exports = JSON.parse('{"apiVersion":2,"name":"wellerpcb/card","version":"
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-"use strict";
 /*!*********************************************!*\
   !*** ./src/blocks/components/card/index.js ***!
   \*********************************************/
