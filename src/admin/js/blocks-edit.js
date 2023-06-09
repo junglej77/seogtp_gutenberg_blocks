@@ -21,15 +21,55 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 import React from 'react';
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, isBlockSelected } from '@wordpress/block-editor';
 import { Button, PanelBody, __experimentalBorderControl as BorderControl } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-
-
+import { useSelect } from '@wordpress/data';
 
 const SeoGtpBlocksSetup = ({ children }) => {
     // 定义状态变量
     const [tabActive, setTabActive] = useState('style')
+    const selectedBlockClientId = useSelect((select) =>
+        select('core/block-editor').getSelectedBlockClientId()
+    );
+    const selectedBlockAttributes = useSelect((select) =>
+        selectedBlockClientId
+            ? select('core/block-editor').getBlockAttributes(selectedBlockClientId)
+            : {}
+    );
+    const handleBlockSelection = (blockClientId) => {
+        // 执行选择块元素后的操作
+        const activeTabs = document.getElementsByClassName('seogtpGB_tab');
+        let activeTab = ''
+        // 遍历这些元素，找出具有 "active" 类名的元素
+        if (activeTabs.length) {
+            for (var i = 0; i < activeTabs.length; i++) {
+                if (activeTabs[i].classList.contains('active')) {
+                    activeTab = activeTabs[i].getAttribute('data-label')
+                    break; // 如果找到，就跳出循环
+                }
+            }
+            const panelNode = document.querySelector('.components-panel');
+            if (panelNode) {
+                panelNode.setAttribute('data-seogtpGB-tab', activeTab);
+            }
+        }
+    };
+    const handleBlockClearSelection = () => {
+        // 执行清除块元素选中状态后的操作
+        const panelNode = document.querySelector('.components-panel');
+        if (panelNode && panelNode.hasAttribute('data-seogtpGB-tab')) {
+            panelNode.removeAttribute('data-seogtpGB-tab');
+        }
+    };
+
+    // 在组件加载时订阅块元素选择事件
+    useSelect((select) => {
+        select('core/block-editor').isBlockSelected(selectedBlockClientId)
+            ? handleBlockSelection(selectedBlockClientId)
+            : handleBlockClearSelection();
+    }, [selectedBlockClientId]);
+
     // 在这里编写组件的逻辑和状态
     let tabs = [
         {
@@ -51,6 +91,7 @@ const SeoGtpBlocksSetup = ({ children }) => {
     const tabclick = (key) => {
         document.querySelector('.components-panel').setAttribute('data-seogtpGB-tab', key)
         setTabActive(key)
+        console.log(selectedBlockAttributes);
     }
     return (
         <InspectorControls >
@@ -58,6 +99,7 @@ const SeoGtpBlocksSetup = ({ children }) => {
                 {tabs.map(item =>
                     <Button
                         className={[`seogtpGB_tab seogtpGB_${item.key}`, item.key == tabActive && 'active']}
+                        data-label={item.key}
                         variant={item.variant}
                         onClick={() => {
                             tabclick(item.key)

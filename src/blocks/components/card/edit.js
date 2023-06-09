@@ -1,4 +1,4 @@
-import SeoGtpBlocksSetup from '../../../admin/js/block';
+import SeoGtpBlocksSetup from '../../../admin/js/blocks-edit';
 import { __ } from '@wordpress/i18n';
 import {
     useBlockProps, InnerBlocks
@@ -7,7 +7,6 @@ import {
 import './editor.scss';
 export default function Edit() {
     const blockProps = useBlockProps();
-
     return (
         <>
             <SeoGtpBlocksSetup />

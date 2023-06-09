@@ -32,6 +32,16 @@ module.exports = window["wp"]["components"];
 
 /***/ }),
 
+/***/ "@wordpress/data":
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["data"];
+
+/***/ }),
+
 /***/ "@wordpress/element":
 /*!*********************************!*\
   !*** external ["wp","element"] ***!
@@ -123,9 +133,9 @@ module.exports = window["wp"]["i18n"];
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!*******************************!*\
-  !*** ./src/admin/js/block.js ***!
-  \*******************************/
+/*!*************************************!*\
+  !*** ./src/admin/js/blocks-edit.js ***!
+  \*************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -140,6 +150,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_5__);
 document.addEventListener('DOMContentLoaded', function () {
   wp.data.subscribe(function () {
     const toolbarLeftContainer = document.querySelector('.edit-post-header-toolbar');
@@ -163,11 +175,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+
 const SeoGtpBlocksSetup = ({
   children
 }) => {
   // 定义状态变量
   const [tabActive, setTabActive] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)('style');
+  const selectedBlockClientId = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => select('core/block-editor').getSelectedBlockClientId());
+  const selectedBlockAttributes = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => selectedBlockClientId ? select('core/block-editor').getBlockAttributes(selectedBlockClientId) : {});
+  const handleBlockSelection = blockClientId => {
+    // 执行选择块元素后的操作
+    const activeTabs = document.getElementsByClassName('seogtpGB_tab');
+    let activeTab = '';
+    // 遍历这些元素，找出具有 "active" 类名的元素
+    if (activeTabs.length) {
+      for (var i = 0; i < activeTabs.length; i++) {
+        if (activeTabs[i].classList.contains('active')) {
+          activeTab = activeTabs[i].getAttribute('data-label');
+          break; // 如果找到，就跳出循环
+        }
+      }
+
+      const panelNode = document.querySelector('.components-panel');
+      if (panelNode) {
+        panelNode.setAttribute('data-seogtpGB-tab', activeTab);
+      }
+    }
+  };
+  const handleBlockClearSelection = () => {
+    // 执行清除块元素选中状态后的操作
+    const panelNode = document.querySelector('.components-panel');
+    if (panelNode && panelNode.hasAttribute('data-seogtpGB-tab')) {
+      panelNode.removeAttribute('data-seogtpGB-tab');
+    }
+  };
+
+  // 在组件加载时订阅块元素选择事件
+  (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
+    select('core/block-editor').isBlockSelected(selectedBlockClientId) ? handleBlockSelection(selectedBlockClientId) : handleBlockClearSelection();
+  }, [selectedBlockClientId]);
+
   // 在这里编写组件的逻辑和状态
   let tabs = [{
     variant: 'secondary',
@@ -185,9 +232,11 @@ const SeoGtpBlocksSetup = ({
   const tabclick = key => {
     document.querySelector('.components-panel').setAttribute('data-seogtpGB-tab', key);
     setTabActive(key);
+    console.log(selectedBlockAttributes);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, null, tabs.map(item => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
     className: [`seogtpGB_tab seogtpGB_${item.key}`, item.key == tabActive && 'active'],
+    "data-label": item.key,
     variant: item.variant,
     onClick: () => {
       tabclick(item.key);
@@ -221,4 +270,4 @@ const SeoGtpBlocksSetup = ({
 
 /******/ })()
 ;
-//# sourceMappingURL=block.js.map
+//# sourceMappingURL=blocks-edit.js.map

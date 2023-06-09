@@ -141,10 +141,10 @@ const SeoGtpBlocksSetup = ({
 
 /***/ }),
 
-/***/ "./src/blocks/components/card/edit.js":
-/*!********************************************!*\
-  !*** ./src/blocks/components/card/edit.js ***!
-  \********************************************/
+/***/ "./src/blocks/components/image/edit.js":
+/*!*********************************************!*\
+  !*** ./src/blocks/components/image/edit.js ***!
+  \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -154,26 +154,76 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _admin_js_blocks_edit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../admin/js/blocks-edit */ "./src/admin/js/blocks-edit.js");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./editor.scss */ "./src/blocks/components/card/editor.scss");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./editor.scss */ "./src/blocks/components/image/editor.scss");
 
 
 
 
-function Edit() {
-  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)();
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_admin_js_blocks_edit__WEBPACK_IMPORTED_MODULE_0__["default"], null), /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InnerBlocks, {
-    placeholder: "\u8BF7\u5C06\u4F60\u7684\u5185\u5BB9\u653E\u5728\u8FD9\u91CC\u9762"
+
+
+// 在编辑器外部定义默认的图片 URL
+function Edit({
+  attributes,
+  setAttributes
+}) {
+  const {
+    imageUrl,
+    imageAlt
+  } = attributes;
+  const [imgWidth, setImgWidth] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)('');
+  const [imgHeight, setImgHeight] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)('');
+  const onSelectImage = media => {
+    if (media && media.url) {
+      setImgWidth(media.width);
+      setImgHeight(media.height);
+      setAttributes({
+        imageUrl: media.url
+      });
+    }
+  };
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)({
+    style: {
+      maxWidth: imgWidth,
+      maxHeight: imgHeight
+    }
+  });
+  let styleSets = /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextareaControl, {
+    label: "Text",
+    help: "Enter some text",
+    value: imageAlt,
+    onChange: value => {
+      setAttributes({
+        imageAlt: value
+      });
+    }
+  });
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_admin_js_blocks_edit__WEBPACK_IMPORTED_MODULE_0__["default"], null, styleSets), /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.MediaUpload, {
+    onSelect: onSelectImage,
+    allowedTypes: ['image'],
+    value: imageUrl,
+    render: ({
+      open
+    }) => /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Button, {
+      onClick: open
+    }, "Select Image")
+  }), imageUrl && /*#__PURE__*/React.createElement("img", {
+    src: imageUrl,
+    alt: "Selected Image"
   })));
 }
 
 /***/ }),
 
-/***/ "./src/blocks/components/card/save.js":
-/*!********************************************!*\
-  !*** ./src/blocks/components/card/save.js ***!
-  \********************************************/
+/***/ "./src/blocks/components/image/save.js":
+/*!*********************************************!*\
+  !*** ./src/blocks/components/image/save.js ***!
+  \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -182,19 +232,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 
-
-function save() {
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null));
+function save({
+  attributes
+}) {
+  const {
+    imageUrl,
+    imageAlt
+  } = attributes;
+  return /*#__PURE__*/React.createElement("div", null, imageUrl && /*#__PURE__*/React.createElement("img", {
+    src: imageUrl,
+    alt: imageAlt
+  }));
 }
 
 /***/ }),
 
-/***/ "./src/blocks/components/card/editor.scss":
+/***/ "./src/blocks/components/image/editor.scss":
+/*!*************************************************!*\
+  !*** ./src/blocks/components/image/editor.scss ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "blocks\\components\\image\\editor.css");
+
+/***/ }),
+
+/***/ "./src/blocks/components/image/style.scss":
 /*!************************************************!*\
-  !*** ./src/blocks/components/card/editor.scss ***!
+  !*** ./src/blocks/components/image/style.scss ***!
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -202,21 +272,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "blocks\\components\\card\\editor.css");
-
-/***/ }),
-
-/***/ "./src/blocks/components/card/style.scss":
-/*!***********************************************!*\
-  !*** ./src/blocks/components/card/style.scss ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "blocks\\components\\card\\style.css");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + "blocks\\components\\image\\style.css");
 
 /***/ }),
 
@@ -290,13 +346,13 @@ module.exports = window["wp"]["i18n"];
 
 /***/ }),
 
-/***/ "./src/blocks/components/card/block.json":
-/*!***********************************************!*\
-  !*** ./src/blocks/components/card/block.json ***!
-  \***********************************************/
+/***/ "./src/blocks/components/image/block.json":
+/*!************************************************!*\
+  !*** ./src/blocks/components/image/block.json ***!
+  \************************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"apiVersion":2,"name":"wellerpcb/card","version":"0.1.0","title":"wellerpcb卡片","category":"wellerpcb","icon":"","description":"基础卡片展示","textdomain":"br","supports":{"html":false},"example":{},"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = JSON.parse('{"apiVersion":2,"name":"wellerpcb/image","version":"0.1.0","title":"图片","category":"wellerpcb","icon":"","description":"基础卡片展示","textdomain":"br","supports":{"html":false},"attributes":{"imageUrl":{"type":"string","source":"attribute","attribute":"src","selector":"img"},"imageAlt":{"type":"string","default":""}},"example":{},"editorScript":"file:./index.js","editorStyle":"file:./editor.css","style":"file:./style.css"}');
 
 /***/ })
 
@@ -406,16 +462,16 @@ module.exports = JSON.parse('{"apiVersion":2,"name":"wellerpcb/card","version":"
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!*********************************************!*\
-  !*** ./src/blocks/components/card/index.js ***!
-  \*********************************************/
+/*!**********************************************!*\
+  !*** ./src/blocks/components/image/index.js ***!
+  \**********************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/components/card/style.scss");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/blocks/components/card/edit.js");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./save */ "./src/blocks/components/card/save.js");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./block.json */ "./src/blocks/components/card/block.json");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/components/image/style.scss");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/blocks/components/image/edit.js");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./save */ "./src/blocks/components/image/save.js");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./block.json */ "./src/blocks/components/image/block.json");
 
 
 
@@ -429,4 +485,4 @@ __webpack_require__.r(__webpack_exports__);
 
 /******/ })()
 ;
-//# sourceMappingURL=blocks\components\card\index.js.map
+//# sourceMappingURL=blocks\components\image\index.js.map
